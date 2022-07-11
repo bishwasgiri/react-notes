@@ -1,3 +1,4 @@
+import List from "./List";
 
 const list = [
       {
@@ -25,38 +26,10 @@ function App() {
       <h1>My Hacker Stories</h1>
       <label htmlFor="search">Search</label>
       <input type="text" id="search" />
-      {
-        // list.map(function(item){
-        //   return <div>{item.title}</div>
-        // })
-
-        // imporoved code
-        // key is used so that react can identify modified items if list changes
-        // avoid using index 
-        // list.map(function(item){
-        //   return(
-        //     <div key={item.objectID}>
-        //       {item.title}
-        //      </div>
-        //   ) ;
-        // })
-      }
-      {
-        // display more items
-        list.map(function(item){
-          return(
-            <div key = {item.objectID}>
-              <span>
-                <a href={item.url}>{item.title}</a>
-              </span>
-              <span>{item.author}</span>
-              <span>{item.num_comments}</span>
-              <span>{item.points}</span>
-            </div>
-          );
-        })
-
-      }
+      {/* creating instance of list component */}
+      <List/>
+      {/* creating another instance of List component*/}
+      <List/>
     </div>
   );
 }
