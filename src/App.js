@@ -1,5 +1,6 @@
 import List from "./List";
-import {useState} from 'react';
+import Search from "./Search";
+// import {useState} from 'react';
 
 const App = () => {
   const stories = [
@@ -21,26 +22,17 @@ const App = () => {
     }
   ];
 
-  // hooks are made to make app reactive
-  // hooks are function that return array first is state and second is function
-  // array destructuring
-  const [searchTerm,setSearchTerm] = useState('');
-
-  const handleChange = (e) =>{
-    console.log(e.target.value);
-    setSearchTerm(e.target.value);
-  }
+  // A. Call back Function Get Introduced
+  const handleSearch = event=>{
+    // C. call back to place it was introduced
+    console.log(event.target.value);
+  };
 
   return (
     <div className="App">
       <h1>My Hacker Stories</h1>
-      <label htmlFor="search">Search</label>
-      <input type="text" id="search" onChange ={handleChange}/>
-      <p>
-        Searching for <strong>{searchTerm}</strong>
-      </p>
+      <Search onSearch = {handleSearch}/>
       <List list={stories}/>
-
     </div>
   );
 }
