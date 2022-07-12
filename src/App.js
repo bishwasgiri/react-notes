@@ -1,6 +1,6 @@
 import List from "./List";
 import Search from "./Search";
-// import {useState} from 'react';
+import {useState} from 'react';
 
 const App = () => {
   const stories = [
@@ -22,17 +22,22 @@ const App = () => {
     }
   ];
 
-  // A. Call back Function Get Introduced
+  // to lift the state meaning share the state of search component to other component
+  const[searchTerm, setSearchTerm] = useState('');
+
   const handleSearch = event=>{
-    // C. call back to place it was introduced
-    console.log(event.target.value);
+    setSearchTerm(event.target.value);
   };
+
+  const searchedStories = stories.filter(function(story){
+    return story.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="App">
       <h1>My Hacker Stories</h1>
       <Search onSearch = {handleSearch}/>
-      <List list={stories}/>
+      <List list={searchedStories}/>
     </div>
   );
 }
