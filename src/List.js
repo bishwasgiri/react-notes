@@ -1,28 +1,11 @@
-const list = [
-    {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-    },
-    {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-    }
-];
 
-const List = () =>{
+
+const List = (props) =>{
     return(
         <div>
             {/* in case return statement does not do anything but return a statment only then curly braces can be ommited */}
             {/* return staement is also removed */}
-            {list.map(item =>(    
+            {props.list.map(item =>(    
                 <div key = {item.objectID}>
                     <span>
                         <a href={item.url}>{item.title}</a>
