@@ -1,5 +1,5 @@
 
-
+// props are javascript object basically
 const List = (props) =>{
     return(
         <div>

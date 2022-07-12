@@ -23,7 +23,7 @@ const App = () => {
   ];
 
   // to lift the state meaning share the state of search component to other component
-  const[searchTerm, setSearchTerm] = useState('');
+  const[searchTerm, setSearchTerm] = useState('react');
 
   const handleSearch = event=>{
     setSearchTerm(event.target.value);
@@ -36,7 +36,7 @@ const App = () => {
   return (
     <div className="App">
       <h1>My Hacker Stories</h1>
-      <Search onSearch = {handleSearch}/>
+      <Search search = {searchTerm} onSearch = {handleSearch}/>
       <List list={searchedStories}/>
     </div>
   );

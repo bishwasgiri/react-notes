@@ -1,12 +1,16 @@
 
-const Search = (props) =>{
+const Search = ({search,onSearch}) =>{
+    // const {search,onSearch} = props;
     return(
         <div>
             <label htmlFor="search">Search</label>
-            <input type="text" id="search" onChange ={props.onSearch}/>
-            {/* <p>
-                Searching for <strong>{searchTerm}</strong>
-            </p> */}
+            {/* Controlled Components */}
+            <input type="text" 
+                id="search" 
+                onChange ={onSearch} 
+                value={search}
+            />
+
         </div>
     );
 
