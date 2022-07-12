@@ -10,7 +10,6 @@ const Search = ({search,onSearch}) =>{
                 onChange ={onSearch} 
                 value={search}
             />
-
         </div>
     );
 
