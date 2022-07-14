@@ -1,6 +1,6 @@
 import List from "./List";
 import Search from "./Search";
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 const App = () => {
   const stories = [
@@ -23,10 +23,15 @@ const App = () => {
   ];
 
   // to lift the state meaning share the state of search component to other component
-  const[searchTerm, setSearchTerm] = useState('react');
+  const[searchTerm, setSearchTerm] = useState(localStorage.getItem('search')||'react');
+  
+  useEffect(()=>{
+    localStorage.setItem('search',searchTerm)
+  },[searchTerm]);
 
   const handleSearch = event=>{
     setSearchTerm(event.target.value);
+    // localStorage.setItem('search',event.target.value);
   };
 
   const searchedStories = stories.filter(function(story){
