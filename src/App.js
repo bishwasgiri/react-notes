@@ -1,5 +1,6 @@
-import List from "./List";
-import Search from "./Search";
+// import List from "./List";
+// import Search from "./Search";
+import InputWithLabel from './InputWithLabel';
 import {useEffect, useState} from 'react';
 
 const App = () => {
@@ -42,15 +43,22 @@ const App = () => {
     // localStorage.setItem('search',event.target.value);
   };
 
-  const searchedStories = stories.filter(function(story){
-    return story.title.toLowerCase().includes(searchTerm.toLowerCase());
-  });
+  // const searchedStories = stories.filter(function(story){
+  //   return story.title.toLowerCase().includes(searchTerm.toLowerCase());
+  // });
 
   return (
     <div className="App">
       <h1>My Hacker Stories</h1>
-      <Search search = {searchTerm} onSearch = {handleSearch}/>
-      <List list={searchedStories}/>
+      {/* <Search search = {searchTerm} onSearch = {handleSearch}/>
+      <List list={searchedStories}/> */}
+      <InputWithLabel
+        id="search"
+        label="Search"
+        value = {searchTerm}
+        onInputChange = {handleSearch}
+      />
+
     </div>
   );
 }
