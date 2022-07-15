@@ -56,6 +56,8 @@ const App = () => {
         id="search"
         // label="Search"
         value = {searchTerm}
+        // autoFocus // declarative way 
+        isFocused  // imperative way(isFocused is equal to isFocused = true)
         onInputChange = {handleSearch}
       >
         Search
