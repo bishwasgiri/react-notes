@@ -1,16 +1,17 @@
+import React from "react";
 
 const Search = ({search,onSearch}) =>{
     // const {search,onSearch} = props;
     return(
-        <div>
+        <React.Fragment>
             <label htmlFor="search">Search</label>
-            {/* Controlled Components */}
             <input type="text" 
                 id="search" 
                 onChange ={onSearch} 
                 value={search}
             />
-        </div>
+        </React.Fragment>
+
     );
 
 }

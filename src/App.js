@@ -22,12 +22,20 @@ const App = () => {
     }
   ];
 
-  // to lift the state meaning share the state of search component to other component
-  const[searchTerm, setSearchTerm] = useState(localStorage.getItem('search')||'react');
+  // react custom hooks
+  // using custom hook more than once in react leads to overwrite the value. to fix this pass in a key
+  const useSemiPersistentState = (key,initialState) =>{
+    const[value,setValue] = useState(localStorage.getItem(key)|| initialState);
+    
+    useEffect(()=>{
+      localStorage.setItem(key,value);
+      // console.log('this is useeffect');
+    },[value,key]);
+    return [value,setValue];
+  };
+
+  const[searchTerm,setSearchTerm] = useSemiPersistentState('search','react');
   
-  useEffect(()=>{
-    localStorage.setItem('search',searchTerm)
-  },[searchTerm]);
 
   const handleSearch = event=>{
     setSearchTerm(event.target.value);
