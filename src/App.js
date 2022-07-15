@@ -54,10 +54,12 @@ const App = () => {
       <List list={searchedStories}/> */}
       <InputWithLabel
         id="search"
-        label="Search"
+        // label="Search"
         value = {searchTerm}
         onInputChange = {handleSearch}
-      />
+      >
+        Search
+      </InputWithLabel>
 
     </div>
   );
