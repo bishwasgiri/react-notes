@@ -1,10 +1,10 @@
-// import List from "./List";
-// import Search from "./Search";
+import List from "./List";
+import Search from "./Search";
 import InputWithLabel from './InputWithLabel';
 import {useEffect, useState} from 'react';
 
 const App = () => {
-  const stories = [
+  const initialStories = [
     {
     title: 'React',
     url: 'https://reactjs.org/',
@@ -38,6 +38,14 @@ const App = () => {
   const[searchTerm,setSearchTerm] = useSemiPersistentState('search','react');
   
 
+  const [stories,setStories] = useState(initialStories);
+  const handleRemoveStory = item =>{
+    const newStories = stories.filter(
+      story => item.objectID !== story.objectID
+    );
+    setStories(newStories);
+  }
+
   const handleSearch = event=>{
     setSearchTerm(event.target.value);
     // localStorage.setItem('search',event.target.value);
@@ -50,9 +58,10 @@ const App = () => {
   return (
     <div className="App">
       <h1>My Hacker Stories</h1>
-      {/* <Search search = {searchTerm} onSearch = {handleSearch}/>
-      <List list={searchedStories}/> */}
-      <InputWithLabel
+      <Search search = {searchTerm} onSearch = {handleSearch}/>
+      <List list={searchedStories} onRemoveItem={handleRemoveStory}/>
+
+      {/* <InputWithLabel
         id="search"
         // label="Search"
         value = {searchTerm}
@@ -61,7 +70,7 @@ const App = () => {
         onInputChange = {handleSearch}
       >
         Search
-      </InputWithLabel>
+      </InputWithLabel> */}
 
     </div>
   );
