@@ -36,6 +36,8 @@ const App = () => {
   };
 
   const [stories,setStories] = useState([]);
+  const [isLoading,setIsLoading] = useState(false);
+  const [isError,setIsError] = useState(false);
 
   const getAsyncStories = ()=>
     new Promise(resolve=>
@@ -46,9 +48,13 @@ const App = () => {
   
 
   useEffect(()=>{
-    getAsyncStories().then(result =>{
-      setStories(result.data.stories);
-    })
+    setIsLoading(true);
+    getAsyncStories()
+      .then(result =>{
+        setStories(result.data.stories);
+        setIsLoading(false);
+      })
+      .catch(()=>setIsError(true));
   },[]);
 
   const[searchTerm,setSearchTerm] = useSemiPersistentState('search','react');
@@ -75,7 +81,17 @@ const App = () => {
     <div className="App">
       <h1>My Hacker Stories</h1>
       <Search search = {searchTerm} onSearch = {handleSearch}/>
-      <List list={searchedStories} onRemoveItem={handleRemoveStory}/>
+      {/* Conditional rendering */}
+      {isError && <p>Something went wrong...</p>}
+      {
+        isLoading ? (
+          <p>Loading.....</p>
+        ):(
+          <List list={searchedStories} onRemoveItem={handleRemoveStory}/>
+        )
+      }
+      
+
 
       {/* <InputWithLabel
         id="search"
