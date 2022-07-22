@@ -1,6 +1,6 @@
 import List from "./List";
 import Search from "./Search";
-import InputWithLabel from './InputWithLabel';
+// import InputWithLabel from './InputWithLabel';
 import {useEffect, useState} from 'react';
 
 const App = () => {
@@ -35,10 +35,26 @@ const App = () => {
     return [value,setValue];
   };
 
-  const[searchTerm,setSearchTerm] = useSemiPersistentState('search','react');
+  const [stories,setStories] = useState([]);
+
+  const getAsyncStories = ()=>
+    new Promise(resolve=>
+      setTimeout(()=> resolve({data:{stories:initialStories}}),2000)
+      );
+      
+    // Promise.resolve({data:{story:initialStories}});
   
 
-  const [stories,setStories] = useState(initialStories);
+  useEffect(()=>{
+    getAsyncStories().then(result =>{
+      setStories(result.data.stories);
+    })
+  },[]);
+
+  const[searchTerm,setSearchTerm] = useSemiPersistentState('search','react');
+  
+  // const [stories,setStories] = useState(initialStories);
+  
   const handleRemoveStory = item =>{
     const newStories = stories.filter(
       story => item.objectID !== story.objectID
@@ -51,9 +67,9 @@ const App = () => {
     // localStorage.setItem('search',event.target.value);
   };
 
-  // const searchedStories = stories.filter(function(story){
-  //   return story.title.toLowerCase().includes(searchTerm.toLowerCase());
-  // });
+  const searchedStories = stories.filter(function(story){
+    return story.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="App">

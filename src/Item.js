@@ -1,7 +1,7 @@
 const Item = ({item,onRemoveItem})=>{
-    const handleRemoveItem = ()=>{
-        onRemoveItem(item);
-    }
+    // const handleRemoveItem = ()=>{
+    //     onRemoveItem(item);
+    // }
    return (
         <div>
             <span>
