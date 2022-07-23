@@ -1,7 +1,22 @@
 import List from "./List";
 import Search from "./Search";
 // import InputWithLabel from './InputWithLabel';
-import {useEffect, useState} from 'react';
+import {useEffect, useState,useReducer} from 'react';
+
+// reducer function
+// always receive state and action
+const storiesReducer = (state,action) =>{
+  if(action.type === 'SET_STORIES'){
+    return action.payload;
+  }else if(action.type === 'REMOVE_STORY') {
+    return state.filter(
+      story => action.payload.objectID !== story.objectID
+    )
+    // throw new Error();
+  }else {
+    throw new Error();
+  }
+}
 
 const App = () => {
   const initialStories = [
@@ -35,7 +50,9 @@ const App = () => {
     return [value,setValue];
   };
 
-  const [stories,setStories] = useState([]);
+  // const [stories,setStories] = useState([]);
+  const [stories, dispatchStories] = useReducer(storiesReducer,[]);
+
   const [isLoading,setIsLoading] = useState(false);
   const [isError,setIsError] = useState(false);
 
@@ -51,7 +68,11 @@ const App = () => {
     setIsLoading(true);
     getAsyncStories()
       .then(result =>{
-        setStories(result.data.stories);
+        // setStories(result.data.stories);
+        dispatchStories({
+          type:'SET_STORIES',
+          payload:result.data.stories,
+        });
         setIsLoading(false);
       })
       .catch(()=>setIsError(true));
@@ -62,10 +83,18 @@ const App = () => {
   // const [stories,setStories] = useState(initialStories);
   
   const handleRemoveStory = item =>{
-    const newStories = stories.filter(
-      story => item.objectID !== story.objectID
-    );
-    setStories(newStories);
+    // const newStories = stories.filter(
+    //   story => item.objectID !== story.objectID
+    // );
+    dispatchStories({
+      type:'REMOVE_STORY',
+      payload:item
+    });
+    // setStories(newStories);
+    // dispatchStories({
+    //   type: 'SET_STORIES',
+    //   payload: newStories,
+    // });
   }
 
   const handleSearch = event=>{
