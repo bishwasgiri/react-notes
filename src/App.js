@@ -3,20 +3,8 @@ import Search from "./Search";
 // import InputWithLabel from './InputWithLabel';
 import {useEffect, useState,useReducer} from 'react';
 
-// reducer function
-// always receive state and action
-// const storiesReducer = (state,action) =>{
-//   if(action.type === 'SET_STORIES'){
-//     return action.payload;
-//   }else if(action.type === 'REMOVE_STORY') {
-//     return state.filter(
-//       story => action.payload.objectID !== story.objectID
-//     )
-//     // throw new Error();
-//   }else {
-//     throw new Error();
-//   }
-// }
+// A
+const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
 const storiesReducer = (state,action) =>{
   switch(action.type){
@@ -51,24 +39,24 @@ const storiesReducer = (state,action) =>{
 }
 
 const App = () => {
-  const initialStories = [
-    {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-    },
-    {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-    }
-  ];
+  // const initialStories = [
+  //   {
+  //   title: 'React',
+  //   url: 'https://reactjs.org/',
+  //   author: 'Jordan Walke',
+  //   num_comments: 3,
+  //   points: 4,
+  //   objectID: 0,
+  //   },
+  //   {
+  //   title: 'Redux',
+  //   url: 'https://redux.js.org/',
+  //   author: 'Dan Abramov, Andrew Clark',
+  //   num_comments: 2,
+  //   points: 5,
+  //   objectID: 1,
+  //   }
+  // ];
 
   // react custom hooks
   // using custom hook more than once in react leads to overwrite the value. to fix this pass in a key
@@ -92,10 +80,10 @@ const App = () => {
   const [stories,dispatchStories] = useReducer(storiesReducer,
     {data:[],isLoading:false,isError:false});
   
-  const getAsyncStories = ()=>
-    new Promise(resolve=>
-      setTimeout(()=> resolve({data:{stories:initialStories}}),2000)
-      );
+  // const getAsyncStories = ()=>
+  //   new Promise(resolve=>
+  //     setTimeout(()=> resolve({data:{stories:initialStories}}),2000)
+  //     );
       
     // Promise.resolve({data:{story:initialStories}});
   
@@ -104,13 +92,14 @@ const App = () => {
     // setIsLoading(true);
     dispatchStories({type:'STORIES_FETCH_INIT'});
 
-    getAsyncStories()
+    fetch(`${API_ENDPOINT}react`) // B
+      .then(response => response.json()) // C
       .then(result =>{
         // setStories(result.data.stories);
         dispatchStories({
           // type:'SET_STORIES',
           type:'STORIES_FETCH_SUCCESS',
-          payload:result.data.stories,
+          payload:result.hits, //D
         });
         // setIsLoading(false);
       })
